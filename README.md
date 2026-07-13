@@ -106,15 +106,3 @@ spring.datasource.url=jdbc:postgresql://localhost:5432/annunciamo
 spring.datasource.username=[username]
 spring.datasource.password=[password]
 ```
-
-## Analisi delle prestazioni
-
-[Descrivere qui il caso d'uso analizzato, il confronto tra strategie di fetch (LAZY/EAGER/JOIN FETCH/EntityGraph) e i risultati della sperimentazione richiesta dalla consegna, con eventuali tempi misurati e considerazioni.]
-
-## Malfunzionamenti noti
-
-[Elencare qui eventuali bug o limitazioni non risolte al momento della consegna, oppure scrivere "Nessun malfunzionamento noto".]
-
-## Considerazioni generali
-
-[Breve riflessione personale sull'esperienza di sviluppo del progetto, difficoltà incontrate, scelte progettuali significative.]
