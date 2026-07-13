@@ -83,7 +83,6 @@ annunciamo/
 ### Backend
 
 ```bash
-cd backend
 mvn spring-boot:run
 ```
 
@@ -92,7 +91,6 @@ Il backend sarà disponibile su `http://localhost:8080`.
 ### Frontend React
 
 ```bash
-cd frontend
 npm install
 npm run dev
 ```
