@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<link th:href="@{/css/stile.css}" rel="stylesheet" />
+	<link th:href="@{/assets/index-DiLzAY-5.css}" rel="stylesheet" />
+	<link rel="icon" type="image/png" th:href="@{/images/favicon.png}"/>
+	<title>AnnunciAmo - Annunci</title>
+</head>
+
+<body>
+	<header th:replace="fragments/base.html :: intestazione"></header>
+
+	<div id="annunci-react-root">
+		<main>
+			<h2>Annunci disponibili</h2>
+			<p th:if="${#lists.isEmpty(annunci)}">Nessun annuncio disponibile al momento.</p>
+			<div th:if="${!#lists.isEmpty(annunci)}">
+				<article class="card annuncio-card" th:each="annuncio : ${annunci}">
+					<div class="annuncio-header">
+						<img th:if="${annuncio.immagine != null}" th:src="@{/annunci/{id}/immagine(id=${annuncio.id})}"
+							alt="Immagine annuncio" width="120">
+						<h3 class="annuncio-title">
+							<a th:href="@{/annunci/{id}(id=${annuncio.id})}" th:text="${annuncio.titolo}">Titolo</a>
+						</h3>
+						<div class="annuncio-price" th:text="${annuncio.prezzo} + ' €'">Prezzo</div>
+					</div>
+
+					<p class="annuncio-category" th:text="${annuncio.categoria != null ? annuncio.categoria.nome : ''}">
+						Categoria</p>
+				</article>
+			</div>
+		</main>
+	</div>
+
+	<script type="module" th:src="@{/assets/index-CdTsbcfh.js}"></script>
+
+	<footer th:replace="fragments/base.html :: fondo"></footer>
+</body>
+
+</html>

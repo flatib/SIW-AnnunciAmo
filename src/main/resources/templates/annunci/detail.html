@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/base.html :: headerfiles(${annuncio.titolo})"></head>
+
+<body>
+	<header th:replace="fragments/base.html :: intestazione"></header>
+
+	<main class="container">
+		<section class="card annuncio-dettaglio">
+
+			<div class="annuncio-dettaglio-principale">
+
+				<div class="annuncio-dettaglio-immagine">
+					<img th:if="${annuncio.immagine != null}" th:src="@{'/annunci/' + ${annuncio.id} + '/immagine'}"
+						th:alt="'Immagine di ' + ${annuncio.titolo}" class="annuncio-dettaglio-img">
+
+					<div th:if="${annuncio.immagine == null}" class="annuncio-dettaglio-placeholder">
+						Nessuna immagine disponibile
+					</div>
+				</div>
+
+				<div class="annuncio-dettaglio-info">
+
+					<h2 th:text="${annuncio.titolo}">
+						Titolo annuncio
+					</h2>
+
+					<dl class="annuncio-dati">
+
+						<div th:if="${annuncio.categoria != null}">
+							<dt>Categoria</dt>
+							<dd th:text="${annuncio.categoria.nome}">
+								Categoria
+							</dd>
+						</div>
+
+						<div>
+							<dt>Stato</dt>
+							<dd th:text="${annuncio.stato}">
+								ATTIVO
+							</dd>
+						</div>
+
+						<div>
+							<dt>Autore</dt>
+							<dd th:text="${annuncio.autore.credentials.username}">
+								Nome autore
+							</dd>
+						</div>
+
+						<div>
+							<dt>Prezzo</dt>
+							<dd class="annuncio-dettaglio-prezzo" th:text="${annuncio.prezzo} + ' €'">
+								0,00 €
+							</dd>
+						</div>
+
+					</dl>
+
+				</div>
+
+			</div>
+
+			<div class="annuncio-dettaglio-descrizione">
+				<h3>Descrizione</h3>
+
+				<p th:text="${annuncio.descrizione}">
+					Descrizione dell'annuncio
+				</p>
+			</div>
+
+			<div th:if="${puoGestireAnnuncio and annuncio.isAttivo}" class="annuncio-dettaglio-azioni">
+
+				<a th:href="@{/annunci/{id}/edit(id=${annuncio.id})}">
+					Modifica annuncio
+				</a>
+
+				<span aria-hidden="true">|</span>
+
+				<form th:if="${annuncio.stato != null and annuncio.stato.name() == 'ATTIVO'}"
+					th:action="@{/annunci/{id}/venduto(id=${annuncio.id})}" method="post" class="azione-inline">
+
+					<a href="#" onclick="event.preventDefault(); this.closest('form').submit();">
+						Segna come venduto
+					</a>
+				</form>
+
+				<span aria-hidden="true">|</span>
+
+				<form th:action="@{/annunci/{id}/delete(id=${annuncio.id})}" method="post" class="azione-inline">
+
+					<a href="#" class="danger-link" onclick="
+		                   event.preventDefault();
+
+		                   if (confirm('Sei sicuro di voler eliminare questo annuncio?')) {
+		                       this.closest('form').submit();
+		                   }
+		               ">
+						Elimina annuncio
+					</a>
+				</form>
+
+			</div>
+
+		</section>
+
+		<section class="card contatta-venditore">
+			<h3>Contatta il venditore</h3>
+
+			<p th:if="${messaggioSuccesso}" class="success" th:text="${messaggioSuccesso}"></p>
+			<p th:if="${messaggioErrore}" class="error" th:text="${messaggioErrore}"></p>
+
+			<div th:if="${puoContattareVenditore}">
+				<form th:action="@{/annunci/{id}/messaggi(id=${annuncio.id})}" method="post">
+					<label for="testo">Messaggio</label>
+					<textarea id="testo" name="testo" rows="5" maxlength="1000" required
+						placeholder="Scrivi un messaggio al venditore..."></textarea>
+
+					<button type="submit">Invia messaggio</button>
+				</form>
+			</div>
+
+			<p th:if="${utenteLoggato == null}">
+				<a th:href="@{/login}">Accedi</a> per contattare il venditore.
+			</p>
+
+			<p th:if="${utenteLoggato != null and puoGestireAnnuncio and annuncio.isVenduto()}">
+				Hai già venduto questo articolo.
+			</p>
+
+			<p th:if="${utenteLoggato != null and puoGestireAnnuncio and annuncio.isAttivo()}">
+				Questo annuncio è tuo: i messaggi ricevuti saranno visibili nella sezione Le mie chat.
+			</p>
+
+		</section>
+	</main>
+
+	<footer th:replace="fragments/base.html :: fondo"></footer>
+</body>
+
+</html>

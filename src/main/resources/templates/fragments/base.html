@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:fragment="headerfiles(title)">
+	<meta charset="UTF-8" />
+	<link th:href="@{/css/stile.css}" rel="stylesheet" />
+	<title th:text="${title}">AnnunciAmo</title>
+	<link rel="icon" type="image/png" th:href="@{/images/favicon.png}" />
+</head>
+
+<body>
+	<header th:fragment="intestazione">
+		<div class="header-content">
+
+			<div class="header-brand">
+				<a th:href="@{/}" class="logo">
+					<img th:src="@{/images/logo.png}" alt="AnnunciAmo Logo" class="logo-icon">
+				</a>
+
+				<span th:if="${utenteLoggato != null}" class="messaggio-benvenuto">
+					Accesso effettuato come 
+					<strong th:text="${utenteLoggato.credentials.username}">
+						Nome Cognome
+					</strong>
+				</span>
+			</div>
+
+			<nav>
+				<span sec:authorize="!isAuthenticated()">
+					<a th:href="@{/login}">Login</a>
+					<a th:href="@{/register}">Registrati</a>
+				</span>
+
+				<span sec:authorize="isAuthenticated()">
+					<a th:href="@{/dashboard}">Dashboard</a>
+					<a th:href="@{/annunci/new}">Pubblica annuncio</a>
+					<a th:href="@{/chat}">Le mie chat</a>
+
+					<form th:action="@{/logout}" method="post" style="display: inline">
+						<button type="submit">Logout</button>
+					</form>
+				</span>
+			</nav>
+
+		</div>
+	</header>
+
+	<footer th:fragment="fondo">
+		<p>&copy; 2026 AnnunciAmo - Progetto Sistemi Informativi su Web</p>
+	</footer>
+</body>
+
+</html>

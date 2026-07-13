@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/base.html :: headerfiles('Gestione Annunci')"></head>
+
+<body>
+
+	<header>
+		<nav>
+			<a th:href="@{/}">Torna al sito pubblico</a>
+			<form th:action="@{/logout}" method="post" style="display:inline;">
+				<button type="submit">Logout</button>
+			</form>
+		</nav>
+	</header>
+
+	<main style="padding: 20px;">
+		<h1>Gestione Annunci</h1>
+
+		<table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+			<thead>
+				<tr>
+					<th style="border: 1px solid #ccc; padding: 8px;">ID</th>
+					<th style="border: 1px solid #ccc; padding: 8px;">Titolo</th>
+					<th style="border: 1px solid #ccc; padding: 8px;">Descrizione</th>
+					<th style="border: 1px solid #ccc; padding: 8px;">Prezzo</th>
+					<th style="border: 1px solid #ccc; padding: 8px;">Data di Creazione</th>
+					<th style="border: 1px solid #ccc; padding: 8px;">Stato</th>
+					<th style="border: 1px solid #ccc; padding: 8px;">Azioni</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="annuncio : ${annunci}">
+					<td style="border: 1px solid #ccc; padding: 8px;" th:text="${annuncio.id}"></td>
+					<td style="border: 1px solid #ccc; padding: 8px;" th:text="${annuncio.titolo}"></td>
+					<td style="border: 1px solid #ccc; padding: 8px;" th:text="${annuncio.descrizione}"></td>
+					<td style="border: 1px solid #ccc; padding: 8px;" th:text="${annuncio.prezzo}"></td>
+					<td style="border: 1px solid #ccc; padding: 8px;"
+						th:text="${#temporals.format(annuncio.dataPubblicazione, 'dd/MM/yyyy')}"></td>
+					<td style="border: 1px solid #ccc; padding: 8px;" th:text="${annuncio.stato}"></td>
+					<td style="border: 1px solid #ccc; padding: 8px;">
+						<form th:action="@{/admin/annunci/{id}/delete(id=${annuncio.id})}" method="post"
+							style="display:inline;">
+							<button type="submit" class="btn">Elimina</button>
+						</form>
+						<form th:action="@{/annunci/{id}/edit(id=${annuncio.id})}" method="get"
+							style="display:inline;">
+							<button type="submit" class="btn">Modifica</button>
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+</body>
