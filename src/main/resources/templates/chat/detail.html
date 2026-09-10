@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/base :: headerfiles('Chat')}"></head>
+
+<body>
+
+<header th:replace="~{fragments/base :: intestazione}"></header>
+
+<main class="container">
+
+    <h2>Chat</h2>
+
+    <section class="chat-box">
+
+        <div th:each="messaggio : ${messaggi}"
+             class="messaggio"
+             th:classappend="${messaggio.mittente.id == utenteCorrente.id} ? ' mio-messaggio' : ' altro-messaggio'">
+
+            <p>
+                <strong th:text="${messaggio.mittente.credentials.username}">
+                    Mittente
+                </strong>
+            </p>
+
+            <p th:text="${messaggio.testo}">
+                Testo messaggio
+            </p>
+
+            <small th:text="${#temporals.format(messaggio.dataInvio, 'dd/MM/yyyy HH:mm')}">
+                Data
+            </small>
+
+        </div>
+
+		        <form th:action="@{/chat/annuncio/{annuncioId}/utente/{utenteId}
+		                (annuncioId=${annuncioId}, utenteId=${altroUtenteId})}"
+		              method="post">
+
+		            <textarea name="testo"
+		                      rows="4"
+		                      required
+		                      placeholder="Scrivi una risposta..."></textarea>
+
+		            <button type="submit">
+		                Invia risposta
+		            </button>
+
+		        </form>
+
+    </section>
+
+
+</main>
+
+<footer th:replace="~{fragments/base :: fondo}"></footer>
+
+</body>
+</html>

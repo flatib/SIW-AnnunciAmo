@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/base.html :: headerfiles(${isEdit} ? 'Modifica annuncio' : 'Nuovo annuncio')"></head>
+
+<body>
+	<header th:replace="fragments/base.html :: intestazione"></header>
+
+	<main class="container">
+		<h2 th:text="${isEdit} ? 'Modifica annuncio' : 'Pubblica un nuovo annuncio'">Pubblica un nuovo annuncio</h2>
+
+		<form th:action="${isEdit} ? @{/annunci/{id}/edit(id=${annuncio.id})} : @{/annunci}" method="POST"
+			th:object="${annuncio}" enctype="multipart/form-data">
+
+			<input type="hidden" th:if="${isEdit}" th:field="*{id}" />
+
+			<div>
+				<label for="titolo">Titolo</label>
+				<input type="text" id="titolo" th:field="*{titolo}" required />
+				<span th:if="${#fields.hasErrors('titolo')}" th:errors="*{titolo}" style="color:red"></span>
+			</div>
+
+			<div>
+				<label for="descrizione">Descrizione</label>
+				<textarea id="descrizione" th:field="*{descrizione}"></textarea>
+			</div>
+
+			<div>
+				<label for="prezzo">Prezzo</label>
+				<input type="number" step="0.01" min="0" id="prezzo" th:field="*{prezzo}" required />
+				<span th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}" style="color:red"></span>
+			</div>
+
+			<div>
+				<label for="categoria">Categoria</label>
+				<select id="categoria" th:field="*{categoria}">
+					<option value="">-- Seleziona una categoria --</option>
+					<option th:each="cat : ${categorie}" th:value="${cat.id}" th:text="${cat.nome}">Categoria</option>
+				</select>
+			</div>
+			<div>
+				<label for="immagineFile">Immagine</label>
+
+				<input type="file" id="immagineFile" name="immagineFile" accept="image/*">
+
+				<p id="erroreDimensioneImmagine" th:text="${erroreImmagine}" th:style="${erroreImmagine != null}
+			            ? 'display:block; color:red;'
+			            : 'display:none; color:red;'">
+				</p>
+			</div>
+
+			<div class="confronto-immagini">
+
+				<div th:if="${isEdit and annuncio.immagine != null}" class="riquadro-immagine">
+
+					<p>Immagine attuale:</p>
+
+					<img th:src="@{/annunci/{id}/immagine(id=${annuncio.id})}"
+						th:alt="'Immagine attuale dell’annuncio ' + ${annuncio.titolo}" class="immagine-form">
+				</div>
+
+				<div id="contenitoreAnteprima" class="riquadro-immagine" style="display: none;">
+
+					<p>Nuova immagine selezionata:</p>
+
+					<img id="anteprimaImmagine" alt="Anteprima della nuova immagine" class="immagine-form">
+				</div>
+
+			</div>
+
+			<div class="azioni">
+				<button type="submit" th:text="${isEdit} ? 'Salva modifiche' : 'Pubblica'">Pubblica</button>
+				<a th:href="${isEdit} ? @{/annunci/{id}(id=${annuncio.id})} : @{/dashboard}">Annulla</a>
+			</div>
+		</form>
+	</main>
+
+	<footer th:replace="fragments/base.html :: fondo"></footer>
+</body>
+
+<script>
+	const dimensioneMassimaImmagine = 5 * 1024 * 1024;
+
+	const formAnnuncio = document.querySelector("form");
+	const inputImmagine = document.getElementById("immagineFile");
+	const erroreImmagine = document.getElementById("erroreDimensioneImmagine");
+
+	const contenitoreAnteprima =
+		document.getElementById("contenitoreAnteprima");
+
+	const anteprimaImmagine =
+		document.getElementById("anteprimaImmagine");
+
+	let urlAnteprima = null;
+
+	function nascondiAnteprima() {
+		contenitoreAnteprima.style.display = "none";
+		anteprimaImmagine.removeAttribute("src");
+
+		if (urlAnteprima !== null) {
+			URL.revokeObjectURL(urlAnteprima);
+			urlAnteprima = null;
+		}
+	}
+
+	function mostraAnteprima(file) {
+		if (urlAnteprima !== null) {
+			URL.revokeObjectURL(urlAnteprima);
+		}
+
+		urlAnteprima = URL.createObjectURL(file);
+		anteprimaImmagine.src = urlAnteprima;
+		contenitoreAnteprima.style.display = "block";
+	}
+
+	function controllaImmagine() {
+		const file = inputImmagine.files[0];
+
+		if (!file) {
+			erroreImmagine.textContent = "";
+			erroreImmagine.style.display = "none";
+			inputImmagine.setCustomValidity("");
+			nascondiAnteprima();
+			return true;
+		}
+
+		if (!file.type.startsWith("image/")) {
+			erroreImmagine.textContent =
+				"Il file selezionato non è un'immagine valida.";
+			erroreImmagine.style.display = "block";
+
+			inputImmagine.setCustomValidity(
+				"Seleziona un file immagine valido."
+			);
+
+			nascondiAnteprima();
+			return false;
+		}
+
+		if (file.size > dimensioneMassimaImmagine) {
+			erroreImmagine.textContent =
+				"L'immagine selezionata supera la dimensione massima di 5 MB.";
+			erroreImmagine.style.display = "block";
+
+			inputImmagine.setCustomValidity(
+				"L'immagine non può superare i 5 MB."
+			);
+
+			nascondiAnteprima();
+			return false;
+		}
+
+		erroreImmagine.textContent = "";
+		erroreImmagine.style.display = "none";
+		inputImmagine.setCustomValidity("");
+
+		mostraAnteprima(file);
+		return true;
+	}
+
+	inputImmagine.addEventListener("change", controllaImmagine);
+
+	formAnnuncio.addEventListener("submit", function (event) {
+		if (!controllaImmagine()) {
+			event.preventDefault();
+			inputImmagine.focus();
+		}
+	});
+
+	window.addEventListener("beforeunload", function () {
+		if (urlAnteprima !== null) {
+			URL.revokeObjectURL(urlAnteprima);
+		}
+	});
+</script>
+
+</html>

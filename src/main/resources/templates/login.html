@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/base.html :: headerfiles('Login')"></head>
+<body>
+    <header th:replace="fragments/base.html :: intestazione"></header>
+
+    <div>
+        <h2>Accedi</h2>
+        <p th:if="${param.error}" style="color:red">Username o password non validi.</p>
+        <p th:if="${param.logout}" style="color:green">Logout effettuato con successo.</p>
+
+        <form th:action="@{/login}" method="POST">
+            <div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required />
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required />
+            </div>
+            <button type="submit">Accedi</button>
+        </form>
+    </div>
+
+    <footer th:replace="fragments/base.html :: fondo"></footer>
+</body>
+</html>

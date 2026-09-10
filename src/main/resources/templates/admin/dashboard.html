@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/base.html :: headerfiles('Pannello di Amministrazione')"></head>
+<body>
+
+    <header>
+        <nav>
+            <a th:href="@{/}">Torna al sito pubblico</a>
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit">Logout</button>
+            </form>
+        </nav>
+    </header>
+
+    <main style="padding: 20px;">
+        <h1>Dashboard Amministratore</h1>
+
+        <div style="display: flex; gap: 20px; margin-top: 20px;">
+            <div style="border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
+                <h3>Gestione Utenti</h3>
+                <p>Visualizza, elimina o promuovi utenti.</p>
+                <a th:href="@{/admin/users}" class="btn">Vai agli Utenti</a>
+            </div>
+
+            <div style="border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
+                <h3>Gestione Annunci</h3>
+                <p>Modera gli annunci inseriti nel sistema.</p>
+                <a th:href="@{/admin/annunci}" class="btn">Vai agli Annunci</a>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

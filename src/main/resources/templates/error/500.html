@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/base.html :: headerfiles('Errore interno')}"></head>
+<body>
+    <header th:replace="fragments/base.html :: intestazione"></header>
+    <div>
+        <h2>Errore interno del server</h2>
+        <p th:text="${errorMessage}">Messaggio di errore.</p>
+        <a th:href="@{/}">Torna alla home</a>
+    </div>
+    <footer th:replace="fragments/base.html :: fondo"></footer>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/base :: headerfiles('Dashboard')}"></head>
+
+<body>
+
+	<header th:replace="~{fragments/base :: intestazione}"></header>
+
+	<main class="container">
+
+		<h2>La tua Dashboard</h2>
+
+		<p>
+			Accesso effettuato come 
+			<strong th:text="${utente.credentials.username}">Utente</strong>
+		</p>
+
+		<hr>
+
+		<section>
+
+			<h3 class="divisione">I miei annunci attivi</h3>
+
+
+			<div th:if="${#lists.isEmpty(annunci)}">
+				<p>Non hai ancora pubblicato alcun annuncio.</p>
+
+				<a th:href="@{/annunci/new}">
+					Pubblica il tuo primo annuncio
+				</a>
+			</div>
+
+			<div th:unless="${#lists.isEmpty(annunci)}" class="annunci-dashboard">
+				<article th:if="${annuncio.isAttivo}" class="card annuncio-card-dashboard"
+					th:each="annuncio : ${annunci}">
+
+					<h3 class="annuncio-title">
+						<span th:text="${annuncio.titolo}">Titolo</span>
+					</h3>
+
+					<p>
+						<strong>Descrizione:</strong>
+						<span th:text="${annuncio.descrizione}"></span>
+					</p>
+
+					<p>
+						<strong>Categoria:</strong>
+						<span
+							th:text="${annuncio.categoria != null ? annuncio.categoria.nome : 'Nessuna categoria'}"></span>
+					</p>
+
+					<p>
+						<strong>Prezzo:</strong>
+						<span th:text="${annuncio.prezzo} + ' €'"></span>
+					</p>
+
+					<div class="azioni">
+
+						<a th:href="@{/annunci/{id}(id=${annuncio.id})}">
+							Visualizza
+						</a>
+
+						|
+
+						<a th:href="@{/annunci/{id}/edit(id=${annuncio.id})}">
+							Modifica
+						</a>
+
+						|
+
+						<form th:action="@{/annunci/{id}/delete(id=${annuncio.id})}" method="post" class="azione-inline"
+							onsubmit="return confirm('Sei sicuro di voler eliminare questo annuncio?');">
+							<input type="hidden" name="redirectTo" value="/dashboard" />
+							<button type="submit" class="link-button delete-button">
+								Elimina
+							</button>
+						</form>
+
+					</div>
+				</article>
+			</div>
+
+		</section>
+
+		<hr>
+
+		<section>
+
+			<h3 class="divisione">I miei annunci venduti</h3>
+
+			<div th:if="${#lists.isEmpty(annunci)}">
+				<p>Non hai ancora venduto alcun annuncio.</p>
+
+			</div>
+
+			<div th:unless="${#lists.isEmpty(annunci)}" class="annunci-dashboard">
+				<article th:if="${annuncio.isVenduto}" class="card annuncio-card-dashboard"
+					th:each="annuncio : ${annunci}">
+
+					<h4 th:text="${annuncio.titolo}">Titolo</h4>
+
+					<p th:text="${annuncio.descrizione}">
+						Descrizione
+					</p>
+
+					<p>
+						<strong>Categoria:</strong>
+						<span
+							th:text="${annuncio.categoria != null ? annuncio.categoria.nome : 'Nessuna categoria'}"></span>
+					</p>
+
+					<p>
+						<strong>Prezzo:</strong>
+						<span th:text="${annuncio.prezzo} + ' €'"></span>
+					</p>
+
+					<div class="azioni">
+
+						<a th:href="@{/annunci/{id}(id=${annuncio.id})}">
+							Visualizza
+						</a>
+						|
+
+						<form th:action="@{/annunci/{id}/delete(id=${annuncio.id})}" method="post" class="azione-inline"
+							onsubmit="return confirm('Sei sicuro di voler eliminare questo annuncio?');">
+							<input type="hidden" name="redirectTo" value="/dashboard" />
+							<button type="submit" class="link-button delete-button">
+								Elimina
+							</button>
+						</form>
+					</div>
+				</article>
+			</div>
+
+		</section>
+
+		<hr>
+
+		<section>
+
+			<a th:href="@{/annunci/new}">
+				➕ Pubblica un nuovo annuncio
+			</a>
+
+		</section>
+
+	</main>
+
+	<footer th:replace="~{fragments/base :: fondo}"></footer>
+
+</body>
+
+</html>

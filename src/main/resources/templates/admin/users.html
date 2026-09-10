@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head th:replace="fragments/base.html :: headerfiles('Utenti registrati')"></head>
+	<body>
+		<header>
+		        <nav>
+					<span>
+		            <a th:href="@{/}">Torna al sito pubblico</a>
+		            <form th:action="@{/logout}" method="post" style="display:inline;">
+		                <button type="submit">Logout</button>
+		            </form>
+					</span>
+		        </nav>
+		    </header>
+			<main style="padding: 20px;">
+				<h1>Utenti Registrati</h1>
+				<table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+					<thead>
+						<tr>
+							<th style="border: 1px solid #ccc; padding: 8px;">ID</th>
+							<th style="border: 1px solid #ccc; padding: 8px;">Nome</th>
+							<th style="border: 1px solid #ccc; padding: 8px;">Cognome</th>
+							<th style="border: 1px solid #ccc; padding: 8px;">Email</th>
+							<th style="border: 1px solid #ccc; padding: 8px;">Ruolo</th>
+							<th style="border: 1px solid #ccc; padding: 8px;">Azioni</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="user : ${users}">
+							<td style="border: 1px solid #ccc; padding: 8px;" th:text="${user.id}"></td>
+							<td style="border: 1px solid #ccc; padding: 8px;" th:text="${user.name}"></td>
+							<td style="border: 1px solid #ccc; padding: 8px;" th:text="${user.surname}"></td>
+							<td style="border: 1px solid #ccc; padding: 8px;" th:text="${user.email}"></td>
+							<td style="border: 1px solid #ccc; padding: 8px;" th:text = "${user.credentials.role}"></td>
+							<td style="border: 1px solid #ccc; padding: 8px;">
+								<form th:action="@{/admin/users/{id}/delete(id=${user.id})}" method="post" style="display:inline;">
+								    <button type="submit" class="btn">Elimina</button>
+								</form>
+								<form th:action="@{/admin/users/{id}/promote(id=${user.id})}" method="post" style="display:inline;">
+								    <button type="submit" class="btn">Promuovi ad Admin</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+	</body>

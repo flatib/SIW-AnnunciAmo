@@ -1,0 +1,602 @@
+:root {
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --surface-muted: #eef2f7;
+  --text: #1f2937;
+  --text-soft: #6b7280;
+  --primary: #0f766e;
+  --primary-dark: #115e59;
+  --border: #dbe3ee;
+  --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  --radius: 16px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: linear-gradient(180deg, #f8fafc, var(--bg));
+  color: var(--text);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ===== LAYOUT PRINCIPALE ===== */
+main,
+body > div {
+  width: min(900px, calc(100% - 32px));
+  margin: 32px auto;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1 0 auto;
+}
+
+/* ===== HEADER ===== */
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.messaggio-benvenuto {
+    font-size: 1rem;
+    color: var(--text);
+    white-space: nowrap;
+}
+
+.messaggio-benvenuto strong {
+    color: var(--primary);
+}
+
+@media (max-width: 700px) {
+
+    .header-content {
+        align-items: flex-start;
+    }
+
+    .header-brand {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .messaggio-benvenuto {
+        white-space: normal;
+        font-size: 0.95rem;
+    }
+}
+
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 20px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+header div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+header > .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+header h1 {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.divisione{
+  border-bottom: 10px;
+  margin: 20px 0;
+}
+
+/* ===== NAV ===== */
+nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--surface-muted);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+nav a:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* ===== CARD GENERICA ===== */
+.card,
+article,
+section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+
+.annuncio-card-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.annuncio-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.annuncio-card:last-child {
+  margin-bottom: 0;
+}
+
+.annuncio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.annuncio-title {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.annuncio-price {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.annuncio-category {
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  margin: 0;
+}
+
+.annuncio-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.08);
+}
+
+.azione-inline {
+  display: inline;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.link-button:hover {
+  color: var(--primary-dark);
+}
+
+.link-button.delete-button {
+  background: none;
+  color: red;
+  caret-color:white;
+  text-decoration: underline;
+  margin-left: 6px;
+}
+
+.link-button:hover {
+  color: red;
+}
+
+/* ===== LISTA MESSAGGI ===== */
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* MESSAGE ITEM */
+li {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+}
+
+/* TESTO MESSAGGIO */
+li p {
+  margin-top: 8px;
+  color: var(--text);
+}
+
+/* META */
+.message-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  margin-bottom: 6px;
+}
+
+/* ===== FORM ===== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+textarea {
+	width: 100%;
+    resize: none;
+}
+
+input,
+textarea,
+select {
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: white;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+}
+
+/* ===== BOTTONI ===== */
+button,
+input[type="submit"] {
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+button,
+input[type="submit"] {
+  background: var(--primary);
+  color: white;
+}
+
+button:hover,
+input[type="submit"]:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+button.secondary {
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+/* ===== STATI ===== */
+.success {
+  background: #dcfce7;
+  color: #166534;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.error {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  padding: 20px;
+  color: var(--text-soft);
+  margin-top: auto;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  header div {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav {
+    width: 100%;
+  }
+}
+
+.logo-icon{
+	width: 220px;
+}
+/* ===== INTEGRAZIONE REACT RICERCA AVANZATA ===== */
+#annunci-react-root {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  flex: 1 0 auto;
+}
+
+#annunci-react-root .search-overlay {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+#annunci-react-root .annunci-react-content {
+  display: block;
+  flex: none;
+}
+
+/* ===== DETTAGLIO ANNUNCIO E MESSAGGI ===== */
+.annuncio-dettaglio,
+.contatta-venditore,
+.messaggio-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Parte superiore: immagine e informazioni */
+.annuncio-dettaglio-principale {
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) minmax(260px, 1fr);
+    gap: 28px;
+    align-items: start;
+}
+
+/* Colonna dell'immagine */
+.annuncio-dettaglio-immagine {
+    width: 100%;
+}
+
+.annuncio-dettaglio-img {
+    display: block;
+    width: 100%;
+    height: 340px;
+    border-radius: var(--radius);
+    object-fit: cover;
+}
+
+.annuncio-dettaglio-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.annuncio-dettaglio-info h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+
+.confronto-immagini {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.riquadro-immagine {
+    flex: 0 1 400px;
+}
+
+.riquadro-immagine p {
+    margin: 0 0 8px;
+    font-weight: 600;
+}
+
+.immagine-form {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.annuncio-dati {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 0;
+}
+
+.annuncio-dati > div {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 12px;
+    align-items: baseline;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.annuncio-dati dt {
+    color: var(--text-soft);
+    font-weight: 600;
+}
+
+.annuncio-dati dd {
+    margin: 0;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+}
+
+.annuncio-dati .annuncio-dettaglio-prezzo {
+    color: var(--primary);
+    font-size: 1.35rem;
+    font-weight: 700;
+}
+
+/* Descrizione sotto l'immagine */
+.annuncio-dettaglio-descrizione {
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.annuncio-dettaglio-descrizione h3 {
+    margin-bottom: 8px;
+}
+
+.annuncio-dettaglio-descrizione p {
+    margin: 0;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+/* Azioni testuali */
+.annuncio-dettaglio-azioni {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+}
+
+.annuncio-dettaglio-azioni a {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.annuncio-dettaglio-azioni a:hover {
+    color: var(--primary-dark);
+}
+
+.annuncio-dettaglio-azioni .danger-link {
+    color: #b42318;
+}
+
+.annuncio-dettaglio-azioni .danger-link:hover {
+    color: #7a271a;
+}
+
+.azione-inline {
+    display: inline;
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+
+    .annuncio-dettaglio-principale {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .annuncio-dettaglio-img {
+        height: auto;
+        max-height: 420px;
+    }
+
+    .annuncio-dettaglio-placeholder {
+        height: 240px;
+        min-height: 240px;
+    }
+
+    .annuncio-dettaglio-info h2 {
+        font-size: 1.5rem;
+    }
+
+    .annuncio-dati > div {
+        grid-template-columns: 90px 1fr;
+    }
+}
+
+.messaggio-card p {
+  margin: 0;
+}
+
+.contatta-venditore textarea {
+  width: 100%;
+  resize: none;
+}
+
+.chat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.chat-preview {
+    padding: 1rem;
+}
+
+.chat-box {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.messaggio {
+    padding: 1rem;
+    border-radius: 12px;
+    max-width: 70%;
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+.mio-messaggio {
+    align-self: flex-end;
+}
+
+.altro-messaggio {
+    align-self: flex-start;
+}

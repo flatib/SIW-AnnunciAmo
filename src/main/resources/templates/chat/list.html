@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/base :: headerfiles('Le mie chat')}"></head>
+
+<body>
+
+<header th:replace="~{fragments/base :: intestazione}"></header>
+
+<main class="container">
+
+    <h2>Le mie chat</h2>
+
+    <div th:if="${#lists.isEmpty(chatAperte)}">
+        <p>Non hai ancora chat aperte.</p>
+    </div>
+
+    <div th:unless="${#lists.isEmpty(chatAperte)}" class="chat-list">
+
+        <article class="card chat-preview" th:each="chat : ${chatAperte}">
+
+            <h3 th:text="${chat.annuncioTitolo}">Titolo annuncio</h3>
+
+            <p>
+                Chat con:
+                <strong th:text="${chat.altroUtenteNome}">Nome utente</strong>
+            </p>
+
+            <p th:text="${chat.ultimoMessaggio}">
+                Ultimo messaggio
+            </p>
+
+            <a th:href="@{/chat/annuncio/{annuncioId}/utente/{utenteId}
+                (annuncioId=${chat.annuncioId}, utenteId=${chat.altroUtenteId})}">
+                Apri chat
+            </a>
+
+        </article>
+
+    </div>
+
+</main>
+
+<footer th:replace="~{fragments/base :: fondo}"></footer>
+
+</body>
+</html>
