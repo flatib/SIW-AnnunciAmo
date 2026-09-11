@@ -2,6 +2,9 @@
 INSERT INTO users (id, name, surname, email) VALUES (1, 'Mario', 'Rossi', 'mario.rossi@example.com');
 INSERT INTO users (id, name, surname, email) VALUES (2, 'Luigi', 'Verdi', 'luigi.verdi@example.com');
 
+INSERT INTO credentials (id, username, password, role, user_id) VALUES (1, 'mario', '$2a$10$0epXg50TMeIVHE0Vx9IgE.KoxGEZsUQIBtp012S0dDQc2KqBswzda', 'ROLE_USER', 1);
+INSERT INTO credentials (id, username, password, role, user_id) VALUES (2, 'luigi', '$2a$10$17bHqligEcJrWNnWzf65G.uRU6.HNEzU/RdNIBRA/ZxVSCxcs06fK', 'ROLE_USER', 2);
+
 INSERT INTO categorie (id, nome, descrizione) VALUES (1, 'Elettronica', 'Smartphone, PC, Tablet, TV, Console e Audio');
 INSERT INTO categorie (id, nome, descrizione) VALUES (2, 'Motori', 'Auto, Moto, Scooter e Veicoli commerciali');
 INSERT INTO categorie (id, nome, descrizione) VALUES (3, 'Arredamento', 'Mobili, Elettrodomestici, Fai-da-te e Giardino');

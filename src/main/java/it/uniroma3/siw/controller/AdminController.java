@@ -57,7 +57,7 @@ public class AdminController {
 	public String deleteUser(@PathVariable("id") Long id) {
 		List<User> users = userService.findAll();
 		int adminCount = (int) users.stream().filter(user -> user.getCredentials().getRole().equals(Credentials.ADMIN_ROLE)).count();
-		if(adminCount == 1) {
+		if(userService.findById(id).getCredentials().getRole().equals(Credentials.ADMIN_ROLE) && adminCount == 1) {
 			return "redirect:/admin/users?error=lastAdmin";
 		}
 		userService.deleteUser(id);
