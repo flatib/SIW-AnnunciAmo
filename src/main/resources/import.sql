@@ -124,8 +124,6 @@ INSERT INTO annunci (id, titolo, descrizione, prezzo, data_pubblicazione, stato,
 INSERT INTO annunci (id, titolo, descrizione, prezzo, data_pubblicazione, stato, autore_id, categoria_id) VALUES (99, 'Blu-ray Ritorno al Futuro', 'Edizione 30esimo anniversario', 25.0, '2026-07-10T18:55:00', 'ATTIVO', 1, 6);
 INSERT INTO annunci (id, titolo, descrizione, prezzo, data_pubblicazione, stato, autore_id, categoria_id) VALUES (100, 'Enciclopedia della Scienza', '10 volumi, illustrata', 50.0, '2026-07-10T19:00:00', 'ATTIVO', 2, 6);
 
--- Reset della sequenza degli Annunci (FONDAMENTALE)
--- Se Hibernate utilizza generation strategy AUTO, impedirà che i nuovi inserimenti vadano in conflitto con gli ID hardcoded.
 ALTER SEQUENCE annunci_seq RESTART WITH 101;
 ALTER SEQUENCE users_seq RESTART WITH 100;
 ALTER SEQUENCE categorie_seq RESTART WITH 100;

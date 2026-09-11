@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleGenericException(Exception e, Model model) {
         model.addAttribute("errorMessage", "Si è verificato un errore interno. Riprovare più tardi.");
-        e.printStackTrace(); // Log the exception for debugging purposes
+        e.printStackTrace();
         return "error/500";
     }
 }

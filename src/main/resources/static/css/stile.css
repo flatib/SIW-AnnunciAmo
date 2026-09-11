@@ -393,7 +393,6 @@ footer {
     gap: 20px;
 }
 
-/* Parte superiore: immagine e informazioni */
 .annuncio-dettaglio-principale {
     display: grid;
     grid-template-columns: minmax(280px, 1fr) minmax(260px, 1fr);
@@ -401,7 +400,6 @@ footer {
     align-items: start;
 }
 
-/* Colonna dell'immagine */
 .annuncio-dettaglio-immagine {
     width: 100%;
 }
